@@ -2,13 +2,16 @@ const express=require('express');
 const bodyParser=require('body-parser')
 // const env = require('dotenv');
 const authRoutes = require('../routes/auth')
+const adminRoutes = require('../routes/admin/auth')
 const mongoose=require('mongoose')
 const app = express();
 
 //middlewares
 app.use(bodyParser())
 app.use(express.urlencoded())
+app.use(express.json())
 app.use('/api',authRoutes)
+app.use('/api/admin',adminRoutes)
 
 
 mongoose.connect('mongodb+srv://Shoon:Testing123@nodejstesting.hpvsw.mongodb.net/MERN-ecommerce?retryWrites=true&w=majority',
@@ -41,6 +44,6 @@ app.post('/data',(req,res)=>{
 })
 
 
-app.listen(2000,()=>{
+app.listen(3000,()=>{
     console.log(`Server is running on port 2000`)
 })

@@ -1,4 +1,4 @@
-const User=require('../models/user')
+const User=require('../../models/user')
 const jwt=require('jsonwebtoken')
 
 
@@ -6,7 +6,7 @@ exports.signup=(req,res)=>{
     User.findOne({ email: req.body.email })
     .exec((error,user)=>{
         if(user) return res.status(400).json({
-            message : "User already register with this email"
+            message : "Admin already register with this email"
         })
 
         const {
@@ -21,7 +21,8 @@ exports.signup=(req,res)=>{
             lastName,
             email,
             password,
-            username:Math.random().toString()
+            username:Math.random().toString(),
+            role:'admin'
         })
 
         _user.save((error,data)=>{
@@ -47,7 +48,7 @@ exports.signin=(req,res)=>{
         }
 
         if(user){
-            if(user.authenticate(req.body.password)){
+            if(user.authenticate(req.body.password) && user.role==='admin'){
                 const token=jwt.sign({_id:user._id},"MERNECOMMERCE",{expiresIn:'1h'})
                 const { _id,firstName,lastName,email,fullName,role} =user
                 return res.status(200).json({

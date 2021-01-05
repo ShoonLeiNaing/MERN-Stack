@@ -52,6 +52,11 @@ userSchema.virtual('password')
     this.hashPassword=bcryt.hashSync(password,10)
 })
 
+userSchema.virtual('fullName')
+.get(function(){
+    return `${this.firstName} ${this.lastName}`
+})
+
 userSchema.methods={
     authenticate:function(password){
         return bcryt.compareSync(password,this.hashPassword)

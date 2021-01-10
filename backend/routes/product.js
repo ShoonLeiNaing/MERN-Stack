@@ -6,7 +6,7 @@ const shortid=require('shortid')
 const router = express.Router()
 
 var storage = multer.diskStorage({
-    destination : '../uploads',
+    destination : './uploads',
     filename:function(req,file,cb){
         cb(null,shortid.generate()+'-'+file.originalname)
     }

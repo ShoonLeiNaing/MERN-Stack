@@ -2,7 +2,7 @@ const Product=require('../models/product')
 const slugify = require('slugify')
 
 exports.addProduct = (req,res)=>{
-
+    // return res.status(200).json({ message:req.body })
     const{ name,description,price,quantity,category,createdBy} = req.body
     let pictures = []
     if(req.files.length > 0){
@@ -22,7 +22,7 @@ exports.addProduct = (req,res)=>{
     })
     product.save((error,product)=>{
         if(error){
-            return res.status(404).json({ error })
+            return res.status(404).json({ errors: error })
         }
         if(product){
             return res.status(200).json({ product })

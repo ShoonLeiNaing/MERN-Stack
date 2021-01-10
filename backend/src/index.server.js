@@ -3,7 +3,8 @@ const bodyParser=require('body-parser')
 // const env = require('dotenv');
 const authRoutes = require('../routes/auth')
 const adminRoutes = require('../routes/admin/auth')
-const categoryRoutes= require('../routes/category')
+const categoryRoutes = require('../routes/category')
+const productRoutes = require('../routes/product')
 const mongoose=require('mongoose')
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(express.json())
 app.use('/api',authRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/category',categoryRoutes)
+app.use('/api/product',productRoutes)
+
 
 
 mongoose.connect('mongodb+srv://Shoon:Testing123@nodejstesting.hpvsw.mongodb.net/MERN-ecommerce?retryWrites=true&w=majority',

@@ -4,6 +4,7 @@ const bodyParser=require('body-parser')
 const authRoutes = require('../routes/auth')
 const adminRoutes = require('../routes/admin/auth')
 const categoryRoutes = require('../routes/category')
+const cartRoutes = require('../routes/cart')
 const productRoutes = require('../routes/product')
 const mongoose=require('mongoose')
 const app = express();
@@ -12,11 +13,12 @@ const app = express();
 app.use(bodyParser())
 app.use(express.urlencoded())
 app.use(express.json())
-
+app.use('/public',express.static('categoryUploads'))
 app.use('/api',authRoutes)
 app.use('/api/admin',adminRoutes)
 app.use('/api/category',categoryRoutes)
 app.use('/api/product',productRoutes)
+app.use('/api/cart',cartRoutes)
 
 
 

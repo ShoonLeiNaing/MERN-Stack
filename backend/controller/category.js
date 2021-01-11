@@ -27,6 +27,9 @@ exports.addCategory=(req,res)=>{
         name:req.body.name,
         slug:slugify(req.body.name)
     }
+    if(req.file){
+        categoryObj.categoryImage = "http://localhost:2000/public/"+ req.file.filename
+    }
     if(req.body.parentId){
         categoryObj.parentId=req.body.parentId
     }

@@ -7,9 +7,11 @@ const categoryRoutes = require('../routes/category')
 const cartRoutes = require('../routes/cart')
 const productRoutes = require('../routes/product')
 const mongoose=require('mongoose')
+const cors = require('cors')
 const app = express();
 
 //middlewares
+app.use(cors())
 app.use(bodyParser())
 app.use(express.urlencoded())
 app.use(express.json())

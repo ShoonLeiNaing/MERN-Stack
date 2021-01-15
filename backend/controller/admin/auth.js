@@ -46,7 +46,7 @@ exports.signin=(req,res)=>{
     User.findOne({ email:req.body.email })
     .exec((error,user)=>{
         if(error){
-            return res.status(404).json({error})
+            return res.status(400).json({error})
         }
 
         if(user){
@@ -59,9 +59,7 @@ exports.signin=(req,res)=>{
                 })
             }
             else{
-                return res.status(404).json({
-                    message:"Invalid Password"
-                })
+                return res.status(404).json(error)
             }
         }else{
             return res.status(404).json({message:"Something went wrong"})

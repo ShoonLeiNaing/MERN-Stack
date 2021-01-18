@@ -9,7 +9,10 @@ const initialState = {
         picture:" "
     },
     authenticate: false,
-    authenticating: false
+    authenticating: false,
+    loading: false,
+    error: null,
+    message:""
 }
 export default (state=initialState,action)=>{
     console.log(action)
@@ -32,9 +35,33 @@ export default (state=initialState,action)=>{
         }
         break;
 
+        // case(authConstant.LOGIN_FAILURE):
+        // state = {
+        //     ...initialState,
+        // }
+        // break;
+
+        
         case(authConstant.LOGOUT_REQUEST):
+        state = {
+            ...state,
+            loading:true
+        }
+        break;
+
+        case(authConstant.LOGIN_SUCCESS):
+        state = {
+            ...initialState,
+            // message:action.payload.message,
+            loading:false
+        }
+        break;
+
+        case(authConstant.LOGOUT_FAILURE):
         state={
-            ...initialState
+            ...state,
+            loading:false,
+            error:action.payload.error
         }
         break;
     }

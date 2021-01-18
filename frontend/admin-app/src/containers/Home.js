@@ -1,17 +1,20 @@
-import React from 'react'
-import { Container, Jumbotron, Row,Col } from 'react-bootstrap'
+import React,{useState,useEffect}from 'react'
+import {isUserLoggedIn} from '../actions/auth.actions'
+import { NavLink } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
 import './homeStyle.css'
+import { useDispatch, useSelector } from 'react-redux'
 
 export default function Home() {
+    // const auth = useSelector(state=>state.auth)
+    // const dispatch = useDispatch()
+    // useEffect(() => {
+    //     if(!auth.authenticate)
+    //         dispatch(isUserLoggedIn())
+    // })
     return (
-        <Layout>
-            <Container fluid>
-                <Row>
-                    <Col md={2} className="sidebar"> Side Bar </Col>
-                    <Col md={10} style={{ marginLeft:'auto' }}> Container </Col>
-                </Row>
-            </Container>
+        <Layout sidebar>
+           Hello
             {/* <Jumbotron className="text-center">
                 <h1>Welcome to Admin Dashboard</h1>
             </Jumbotron> */}

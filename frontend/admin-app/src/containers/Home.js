@@ -6,12 +6,12 @@ import './homeStyle.css'
 import { useDispatch, useSelector } from 'react-redux'
 
 export default function Home() {
-    // const auth = useSelector(state=>state.auth)
-    // const dispatch = useDispatch()
-    // useEffect(() => {
-    //     if(!auth.authenticate)
-    //         dispatch(isUserLoggedIn())
-    // })
+    const auth = useSelector(state=>state.auth)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if(!auth.authenticate)
+            dispatch(isUserLoggedIn())
+    })
     return (
         <Layout sidebar>
            Hello

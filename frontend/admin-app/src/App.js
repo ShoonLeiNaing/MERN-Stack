@@ -11,6 +11,7 @@ import Signup from './containers/Signup';
 import Signin from './containers/Signin';
 import Products from './containers/Products';
 import Orders from './containers/Orders';
+import Category from './containers/Category'
 
 function App() {
   const auth = useSelector(state => state.auth)
@@ -27,6 +28,7 @@ function App() {
         <PrivateRoute path="/" exact component={Home} />
         <PrivateRoute path="/products" component={Products} />
         <PrivateRoute path="/orders" component={Orders} />
+        <PrivateRoute path="/category" component={Category} />
         <Route path="/signup" component={Signup} />
         <Route path="/signin" component={Signin} />
       </Switch>

@@ -8,7 +8,6 @@ const Layout = (props) => {
         <div>
             
             <Header />
-            
             { props.sidebar ?
                 <Container fluid>
                     <Row>

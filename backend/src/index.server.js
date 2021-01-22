@@ -6,6 +6,7 @@ const adminRoutes = require('../routes/admin/auth')
 const categoryRoutes = require('../routes/category')
 const cartRoutes = require('../routes/cart')
 const productRoutes = require('../routes/product')
+const initialDataRoutes = require('../routes/admin/initialData')
 const mongoose=require('mongoose')
 const cors = require('cors')
 const app = express();
@@ -21,6 +22,8 @@ app.use('/api/admin',adminRoutes)
 app.use('/api/category',categoryRoutes)
 app.use('/api/product',productRoutes)
 app.use('/api/cart',cartRoutes)
+app.use('/api/initialData',initialDataRoutes)
+// app.use('/api/ini')
 
 
 

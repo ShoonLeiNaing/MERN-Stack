@@ -1,20 +1,19 @@
 import React, { useEffect,useState } from 'react'
-import { Container, Row, Col,Modal,Button, Form} from 'react-bootstrap'
+import { Container, Row, Col,Button, Form} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllCategories,addCategory } from '../actions'
 import Layout from '../components/layout/Layout'
 import Input from '../components/UI/Input'
+import Modal from '../components/UI/Modal'
 
-function Category() {
+function Category(props) {
     const [show, setShow] = useState(false);
     const [categoryName,setCategoryName] = useState(" ")
     const [categoryParentId,setCategoryParentId] = useState(" ")
     const [categoryImage,setCategoryImage] = useState(" ")
     const dispatch = useDispatch()
     const category = useSelector(state => state.category)
-    useEffect(() => {
-        dispatch(getAllCategories())
-    }, [])
+    
 
     const renderCategory = (categories) => {
         let categoriesArray = []
@@ -54,6 +53,8 @@ function Category() {
         form.append('parentId',categoryParentId)
         form.append('categoryimage',categoryImage)
         dispatch(addCategory(form))
+        setCategoryParentId("")
+        setCategoryName("")
         setShow(false)
     };
     const handleShow = () => setShow(true);
@@ -79,14 +80,15 @@ function Category() {
                     </Col>
                 </Row>
             </Container>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add new category</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Input
-                        value={categoryName}
+            <Modal
+                show={show}
+                handleClose={handleClose}
+                modalTitle={"Add New Category"}
+            >
+                <Input
+                        value={categoryName} 
                         placeholder={`Category Name`}
+                        label="Name"
                         onChange={(e)=>setCategoryName(e.target.value)}
                     />
                     <select className='form-control'
@@ -100,16 +102,6 @@ function Category() {
                        
                     </select>
                     <input type="file" name="categoryImage" onChange={handleCategoryImage}/>
-                    
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
-                </Modal.Footer>
             </Modal>
         </Layout>
 

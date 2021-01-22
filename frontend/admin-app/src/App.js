@@ -5,21 +5,26 @@ import Header from './components/header/Header';
 import PrivateRoute from './components/HOC/PrivateRoute'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { login, isUserLoggedIn } from './actions/auth.actions'
+import {  isUserLoggedIn,getAllCategories } from './actions'
 import Home from './containers/Home';
 import Signup from './containers/Signup';
 import Signin from './containers/Signin';
 import Products from './containers/Products';
 import Orders from './containers/Orders';
 import Category from './containers/Category'
+import { getAllInitialData } from './actions/initialData.actions';
 
 function App() {
   const auth = useSelector(state => state.auth)
   const dispatch = useDispatch()
   useEffect(() => {
-    if (!auth.authenticate)
+    if (!auth.authenticate){
       dispatch(isUserLoggedIn())
-      return <Redirect to={`/admin/signin`} />
+      // return <Redirect to={`/admin/signin`} />
+    }
+    dispatch(getAllInitialData())
+    
+    
   },[])
   return (
     <div className="App">

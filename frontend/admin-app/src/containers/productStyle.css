@@ -1,0 +1,12 @@
+.productImageContainer{
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.productImageContainer img{
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+    object-fit: contain;
+}

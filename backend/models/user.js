@@ -47,10 +47,10 @@ const userSchema=new mongoose.Schema({
 
 },{timestamps:true})
 
-userSchema.virtual('password')
-.set(function(password){
-    this.hashPassword=bcryt.hashSync(password,10)
-})
+// userSchema.virtual('password')
+// .set(function(password){
+//     this.hashPassword=bcryt.hashSync(password,10)
+// })
 
 userSchema.virtual('fullName')
 .get(function(){
@@ -58,8 +58,8 @@ userSchema.virtual('fullName')
 })
 
 userSchema.methods={
-    authenticate:function(password){
-        return bcryt.compareSync(password,this.hashPassword)
+    authenticate:async function(password){
+        return await bcryt.compare(password,this.hashPassword)
 
     }
 }

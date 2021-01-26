@@ -29,3 +29,9 @@ exports.addProduct = (req,res)=>{
         }
     })
 }
+
+exports.getProductsBySlug = (req,res)=>{
+    const{slug}=req.params
+    res.status(200).json({ slug })
+
+}

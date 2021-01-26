@@ -179,12 +179,13 @@ export default function Products() {
                 <tbody>
                     {product.products.length > 0 ?
                         product.products.map((x) =>
+                            
                             <tr onClick={()=>showProductDetailsModal(x)} key={x._id}>
                                 <td>1</td>
                                 <td>{x.name}</td>
                                 <td>{x.price}</td>
                                 <td>{x.quantity}</td>
-                                <td>{x.category.name}</td>
+                                <td>--</td>
                             </tr>) : null}
                 </tbody>
                 
@@ -214,7 +215,51 @@ export default function Products() {
                     </Col>
                 </Row> */}
             </Container>
-            {renderProductModal()}
+            <Modal show={show} handleClose={handleClose} modalTitle={"Add New Product"}>
+
+            <Input
+                label="Name"
+                value={name}
+                placeholder={`Product Name`}
+                onChange={(e) => setName(e.target.value)}
+            />
+            <Input
+                label="Description"
+                value={description}
+                placeholder={`Product Description`}
+                onChange={(e) => setDescription(e.target.value)}
+            />
+            <Input
+                label="Price"
+                value={price}
+                placeholder={`Product Price`}
+                onChange={(e) => setPrice(e.target.value)}
+            />
+            <Input
+                label="Quantity"
+                value={quantity}
+                placeholder={`Product Quantity`}
+                onChange={(e) => setQuantity(e.target.value)}
+            />
+
+            <select className='form-control'
+                value={myCategory}
+                onChange={(e) => setCategory(e.target.value)}
+            >
+                <option>Select category</option>
+
+                {createCategoryList(myCategory.categories).map((option) =>
+                    <option key={option.value} value={option.value}>{option.name}</option>)}
+
+            </select>
+            {
+                productpicture.length > 0 ?
+                    productpicture.map((pic, index) => <div key={index}>{pic.name}</div>) : null
+            }
+            <input type="file" name="productpicture" onChange={handleProductpicture} />
+
+
+        </Modal>
             {renderProductDetailsModal()}
 
         </Layout>

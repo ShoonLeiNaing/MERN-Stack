@@ -1,0 +1,58 @@
+.menuHeader {
+    height: 50px;
+    width: "100%";
+    background-color: white;
+    border-bottom: 1px solid #cecece;
+    box-shadow: 0 2px 2px -2px #333;
+
+}
+
+.menuHeader ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.menuHeader > ul {
+    margin: 0 50px;
+    /* padding: 50px; */
+    display: flex;
+    position: relative;
+}
+
+.menuHeader > ul > li > span {
+    display: block;
+    line-height: 50px;
+    padding: 0 20px;
+    cursor: pointer;
+}
+
+.menuHeader > ul > li > span:hover {
+    color:red,
+}
+
+.menuHeader > ul > li > ul {
+    position: absolute;
+    display: block;
+    right: 0;
+    left: 0;
+    border: 1px solid #cecece;
+}
+.menuHeader > ul > li:hover  ul {
+   display: block;
+}
+
+.menuHeader > ul > li > ul>li {
+    margin: 0 20px;
+    float: left;
+    font-size: small;
+}
+.menuHeader > ul > li > ul>li>a {  
+    font-weight: bold;
+}
+.menuHeader > ul > li > ul>li a {
+    font-size: 15px;
+    padding: 5px 0;
+    display: block;  
+    text-decoration: none;
+    color: black;
+}

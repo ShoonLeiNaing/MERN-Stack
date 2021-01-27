@@ -32,7 +32,7 @@
 
 .menuHeader > ul > li > ul {
     position: absolute;
-    display: block;
+    display: none;
     right: 0;
     left: 0;
     border: 1px solid #cecece;

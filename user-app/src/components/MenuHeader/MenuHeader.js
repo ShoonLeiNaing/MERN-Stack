@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { getAllCategories } from '../actions/category.actions'
+import { getAllCategories } from '../../actions/category.actions'
 import './menuHeaderStyle.css'
 
 export default function MenuHeader() {

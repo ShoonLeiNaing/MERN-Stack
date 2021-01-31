@@ -5,7 +5,7 @@ const Category = require('../models/category')
 function createCategoryList(categories,parentId=null){
     const categoryList=[]
     let category
-    if(parentId==null){
+    if(parentId==null || parentId==" "){
         category=categories.filter(x => x.parentId==undefined)
     }
     else{
@@ -70,21 +70,34 @@ exports.updateCategory=async(req,res)=>{
             if(parentId !== ""){
                 category.parentId = parentId[i]
             }
-            const updatedCat = await Category.findOneAndUpdate({_id},category,{new:true})
+            const updatedCat = await Category.findOneAndUpdate({id:_id[i]},category,{new:true})
             updatedCategories.push(updatedCat)
         }
         return res.status(200).json({ updatedCategories })
     }
     else{
         const category = {
-            name:name[i],
-            type:type[i]
+            name,
+            type
         }
         if(parentId !== ""){
-            category.parentId = parentId[i]
+            category.parentId = parentId
         }
         const updatedCat = await Category.findOneAndUpdate({_id},category,{new:true})
         updatedCategories.push(updatedCat)
         return res.status(200).json({ updatedCategories })
     }
+}
+
+exports.deleteCategory =async (req,res)=>{
+    const {ids} =req.body.payload
+    console.log(ids)
+    const deletedItems=[]
+    for(let i=0;i<ids.length;i++){
+        const deleteCat = await Category.findOneAndDelete({_id:ids[i]._id})
+        deletedItems.push(deleteCat)
+    }
+    if(deletedItems.length == ids.length)
+        return res.status(200).json({message:"Okay"})
+    
 }

@@ -10,7 +10,7 @@ const initialSate = {
 
 const buildNewCategories = (parentId, categories, category) => {
     let categoryArray = []
-    if(parentId == undefined || parentId ==null){
+    if(parentId == undefined || parentId ==null || parentId==" "){
         return [
             ...categories,
             {

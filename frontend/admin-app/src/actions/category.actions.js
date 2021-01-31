@@ -48,6 +48,31 @@ export const addCategory = (form) => {
                 }
             })
         }
+    }
+}
 
+export const updateCategory = (form) => {
+    return async dispatch => {
+        const res = await axiosInstance.post(`/category/update`, form)
+        if (res.status === 200) {
+           return true
+        }else{
+            console.log(res)
+        }
+    }
+}
+
+export const deleteCategory = (ids) => {
+    return async dispatch => {
+        const res = await axiosInstance.post(`/category/delete`,{
+            payload:{
+                ids
+            }
+        })
+        if (res.status == 200) {
+            return true
+        }else{
+            console.log(res)
+        }
     }
 }

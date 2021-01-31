@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAllCategories, addCategory } from '../actions'
+import { getAllCategories, addCategory, updateCategory,deleteCategory } from '../actions'
 import Layout from '../components/layout/Layout'
 import Input from '../components/UI/Input'
 import Modal from '../components/UI/Modal'
@@ -17,8 +17,9 @@ import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 function Category(props) {
     const [show, setShow] = useState(false);
     const [updateCategoryShow, setUpdateCategoryShow] = useState(false);
+    const [deleteCategoryShow, setDeleteCategoryShow] = useState(false);
     const [categoryName, setCategoryName] = useState(" ")
-    const [categoryParentId, setCategoryParentId] = useState(null)
+    const [categoryParentId, setCategoryParentId] = useState("")
     const [categoryImage, setCategoryImage] = useState(" ")
     const [checked, setChecked] = useState([])
     const [expanded, setExpanded] = useState([])
@@ -26,7 +27,6 @@ function Category(props) {
     const [expandedArray, setExpandeArray] = useState([])
     const dispatch = useDispatch()
     const category = useSelector(state => state.category)
-
 
     const renderCategory = (categories) => {
         let categoriesArray = []
@@ -64,8 +64,7 @@ function Category(props) {
         setCategoryName("")
         setShow(false)
     };
-    const updateHandleShow = () => {
-        setUpdateCategoryShow(true)
+    const checkedArrayUpdate =()=>{
         const categories = createCategoryList(category.categories)
         const checkedArray = []
         checked.length > 0 && checked.forEach((categoryId, index) => {
@@ -82,7 +81,28 @@ function Category(props) {
             setExpandeArray(expandedArray)
         })
 
-        // console.log({checked,expanded,categories})
+    }
+    const updateCategoryHandle = () => {
+        setUpdateCategoryShow(true)
+        checkedArrayUpdate()
+    }
+    const deleteCategoryHandle =()=>{
+        setDeleteCategoryShow(true)
+        checkedArrayUpdate()
+       
+    }
+    const deleteCategories =()=>{
+        const checkedIds = checkedArray.map((item,index)=>({
+            _id:item.value
+        }))
+        setDeleteCategoryShow(false)
+        console.log(checkedIds)
+        dispatch(deleteCategory(checkedIds))
+        .then((result)=>{
+            if(result){
+                dispatch(getAllCategories())
+            }
+        })
     }
     const handleShow = () => setShow(true);
     // const updateHandleShow = () => setUpdateCategoryShow(true)
@@ -101,6 +121,24 @@ function Category(props) {
         }
     }
 
+    const updateCategoryForm =()=>{
+        const form = new FormData()
+        checkedArray.forEach((item,index)=>{
+            form.append('_id',item.value)
+            form.append('name',item.name)
+            form.append('type',item.type)
+            form.append('parentId',item.parentId? item.parentId :"")
+        })
+        setUpdateCategoryShow(false)
+        console.log({checkedArray})
+        dispatch(updateCategory(form))
+        .then(result =>{
+            if(result){
+                dispatch(getAllCategories())
+            }
+        })
+    }
+
 
     return (
         <Layout sidebar>
@@ -114,9 +152,6 @@ function Category(props) {
                     </Col>
                 </Row>
                 <Row>
-                    {/* <Col md={12}>
-                        {renderCategory(category.categories)}
-                    </Col> */}
                     <CheckboxTree
                         nodes={renderCategory(category.categories)}
                         checked={checked}
@@ -134,8 +169,8 @@ function Category(props) {
                 </Row>
                 <Row>
                     <Col>
-                        <button>Delete</button>
-                        <button onClick={updateHandleShow}>Update</button>
+                        <button onClick={deleteCategoryHandle}>Delete</button>
+                        <button onClick={updateCategoryHandle}>Update</button>
                     </Col>
                 </Row>
             </Container>
@@ -166,11 +201,11 @@ function Category(props) {
             {/* Edit Category Modal */}
             <Modal
                 show={updateCategoryShow}
-                handleClose={() => setUpdateCategoryShow(false)}
+                handleClose={updateCategoryForm}
                 modalTitle={"Update Categories"}
                 size="lg"
             >
-                {expandedArray.length > 0 &&
+                {/* {expandedArray.length > 0 &&
                     expandedArray.map((item, index) =>
                         <Row key={index}>
                             <Col>
@@ -205,8 +240,7 @@ function Category(props) {
                             </Col>
                         </Row>
                     )
-                }
-
+                } */}
                 {checkedArray.length > 0 &&
                     checkedArray.map((item, index) =>
                         <Row key={index}>
@@ -226,7 +260,6 @@ function Category(props) {
 
                                     {createCategoryList(category.categories).map((option) =>
                                         <option key={option.value} value={option.value}>{option.name}</option>)}
-
                                 </select>
                             </Col>
                             <Col>
@@ -244,9 +277,29 @@ function Category(props) {
                     )
                 }
             </Modal>
+            <Modal
+            show={deleteCategoryShow}
+            handleClose={()=>setDeleteCategoryShow(false)}
+            modalTitle={"Confirm"}
+            buttons={[
+                {
+                    label:"Yes",
+                    color:"danger",
+                    onClick:deleteCategories
+                },
+                {
+                    label:"No",
+                    color:"primary",
+                    onClick:()=>setDeleteCategoryShow(false)
+                },
+            ]}
+            >
+                <h2>Checked items</h2>
+                {
+                    checkedArray.map((item,index)=><h3 key={index}>{item.name}</h3>)
+                }
+            </Modal>
         </Layout>
-
     )
 }
-
 export default Category

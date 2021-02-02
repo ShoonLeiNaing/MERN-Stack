@@ -9,7 +9,7 @@ exports.requiredSignin = (req,res,next)=>{
         
     }
     else{
-        return res.status(404).json({
+        return res.status(500).json({
             message:"Authorization required"
         })
     }
@@ -19,14 +19,14 @@ exports.requiredSignin = (req,res,next)=>{
 
 exports.adminMiddleware=(req,res,next)=>{
     if(req.user.role !=='admin'){
-        return res.status(404).json({ message: "Acess Denied" })
+        return res.status(500).json({ message: "Acess Denied" })
     }
     next()
 }
 
 exports.userMiddleware=(req,res,next)=>{
     if(req.user.role !=='user'){
-        return res.status(404).json({ message: "Acess Denied" })
+        return res.status(500).json({ message: "Acess Denied" })
     }
     next()
 }

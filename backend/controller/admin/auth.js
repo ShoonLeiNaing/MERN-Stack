@@ -60,10 +60,10 @@ exports.signin=(req,res)=>{
                 })
             }
             else{
-                return res.status(404).json(error)
+                return res.status(500).json(error)
             }
         }else{
-            return res.status(404).json({message:"Something went wrong"})
+            return res.status(500).json({message:"Something went wrong"})
         }
     })
 }
